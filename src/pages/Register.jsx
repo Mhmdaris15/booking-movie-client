@@ -4,6 +4,7 @@ import { Formik, Form, useFormik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../helpers/Config";
 
 const ValidationSchema = Yup.object({
   username: Yup.string()
@@ -39,15 +40,11 @@ const Register = () => {
       balance: tmp.balance,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3000/register",
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL}/register`, values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       console.log(response);
     } catch (error) {
       console.log("Error Axios Found : ", error);

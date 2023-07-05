@@ -1,36 +1,74 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Home from "./pages/Home";
 import AddMovie from "./pages/AddMovie";
 import Register from "./pages/Register";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import RouteGuard from "./components/RouteGuard";
+import Login from "./pages/Login";
+import SingleMovie from "./pages/SingleMovie";
+import ApiDataProvider from "./components/ApiDataProvider";
+
+const PrivateRoute = ({ path, element: Component }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const hasJWT = localStorage.getItem("Token");
+    if (!hasJWT) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
+
+  return (
+    <Route
+      path={path}
+      element={<Component />}
+    />
+  );
+};
 
 function App() {
   const [count, setCount] = useState(0);
-  BrowserRouter;
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/movies/add"
-          element={<AddMovie />}
-        />
-        <Route
-          path="/register"
-          element={<Register />}
-        />
 
-        <Route path="*">"404 Not Found"</Route>
-      </Routes>
-    </BrowserRouter>
+  const hasJWT = () => {
+    // Check if the user has JWT or not
+    const token = localStorage.getItem("Token");
+    return !!token; // Returns true if token exists, false otherwise
+  };
+
+  return (
+    <ApiDataProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/movies/add"
+            element={<AddMovie />}
+          />
+          <Route
+            path="/movies/:id"
+            element={<SingleMovie />}
+          />
+          <Route
+            path="/register"
+            element={<Register />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+          <Route
+            path="*"
+            element="404 Not Found"
+          />
+        </Routes>
+      </BrowserRouter>
+    </ApiDataProvider>
   );
 }
 
