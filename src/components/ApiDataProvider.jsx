@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import ApiDataContext from "./ApiDataContext";
 import axios from "axios";
 
+const baseURL = "http://localhost:3000";
+
 const ApiDataProvider = ({ children }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [cinemasData, setCinemasData] = useState([]);
   const [showtimesData, setShowtimesData] = useState([]);
   const [seatsData, setSeatsData] = useState([]);
+
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/movies");
+        const response = await axios.get(`${baseURL}/movies`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching movies data:", error);
@@ -19,7 +24,7 @@ const ApiDataProvider = ({ children }) => {
 
     const fetchCinemasData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/cinemas");
+        const response = await axios.get(`${baseURL}/cinemas`);
         setCinemasData(response.data);
       } catch (error) {
         console.error("Error fetching cinemas data:", error);
@@ -28,7 +33,7 @@ const ApiDataProvider = ({ children }) => {
 
     const fetchShowtimesData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/showtimes");
+        const response = await axios.get(`${baseURL}/showtimes`);
         setShowtimesData(response.data);
       } catch (error) {
         console.error("Error fetching showtimes data:", error);
@@ -37,7 +42,7 @@ const ApiDataProvider = ({ children }) => {
 
     const fetchSeatsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/seats");
+        const response = await axios.get(`${baseURL}/seats`);
         setSeatsData(response.data);
       } catch (error) {
         console.error("Error fetching seats data:", error);

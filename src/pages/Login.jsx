@@ -24,11 +24,17 @@ const Login = () => {
       password: tmp.password,
     };
     try {
-      const response = await axios.post("http://localhost:3000/login", values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post("http://localhost:3000/login", values);
+
+      const {
+        token,
+        data: { id, username, email },
+      } = response.data;
+
+      // Save the token, username to the local storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
+
       console.log(response);
       navigate("/");
     } catch (error) {

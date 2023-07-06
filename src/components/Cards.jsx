@@ -1,38 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { API_URL } from "../helpers/Config";
 import { Link } from "react-router-dom";
-
-const baseURL = "http://localhost:3000/movies";
+import ApiDataContext from "./ApiDataContext";
 
 const Cards = () => {
   const imgRef = useRef(null);
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("Fetching data from API..." + API_URL);
-        const response = await axios.get(`${API_URL}/movies`);
-        const data = response.data;
-        console.log(data);
-        // Process the response data
-        const processedData = data.map((item) => {
-          imgRef.current = `data:image/jpeg;base64,${item.movie_image}`;
-          return {
-            ...item,
-            movie_image: imgRef.current,
-          };
-        });
-        setData(processedData);
 
-        console.log(processedData);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+  let { data } = useContext(ApiDataContext);
+  data = data.map((item) => {
+    imgRef.current = `data:image/jpeg;base64,${item.movie_image}`;
+    return {
+      ...item,
+      movie_image: imgRef.current,
     };
-
-    fetchData();
-  }, []);
+  });
 
   return (
     <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">

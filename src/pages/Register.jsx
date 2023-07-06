@@ -24,8 +24,9 @@ const ValidationSchema = Yup.object({
     .min(3, "Name must be at least 3 characters")
     .required("Name is required"),
   age: Yup.number()
+    .required("Age is required")
     .min(18, "You must be at least 18 years old")
-    .required("Age is required"),
+    .max(120, "You must be at most 120 years"),
 });
 
 const Register = () => {
@@ -79,7 +80,7 @@ const Register = () => {
               password: "",
               confirm_password: "",
               name: "",
-              age: 18,
+              age: "",
               balance: 0,
             }}
             validationSchema={ValidationSchema}

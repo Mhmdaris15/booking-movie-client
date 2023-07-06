@@ -19,8 +19,6 @@ const SingleMovie = () => {
     };
 
     fetchData();
-
-    //   Get the current URL
   }, []);
 
   function formatCurrency(number) {
@@ -45,7 +43,7 @@ const SingleMovie = () => {
   }
 
   return (
-    <section className="py-14">
+    <section className="py-14 bg-gray-400">
       <div className="max-w-screen-xl mx-auto md:px-8">
         <div className="items-center gap-x-12 sm:px-4 md:px-0 lg:flex">
           <div className="flex-1 sm:hidden lg:block">

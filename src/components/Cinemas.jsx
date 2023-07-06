@@ -11,8 +11,6 @@ const Cinemas = ({ movie_id }) => {
     (showtime) => showtime.movie_id === movie_id
   );
 
-  console.log("New Showtimes Data", showtimesData);
-
   const toggleSeatModal = (showtime_id) => {
     setSeatModals((prev) => ({
       ...prev,
@@ -33,10 +31,10 @@ const Cinemas = ({ movie_id }) => {
       <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
         <div className="relative max-w-2xl mx-auto sm:text-center">
           <div className="relative z-10">
-            <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
+            <h3 className="text-gray-50 text-3xl font-semibold sm:text-4xl">
               Watch this movie on your favorite cinema
             </h3>
-            <p className="mt-3">
+            <p className="mt-3 text-blue-950">
               You can select your favorite cinema and watch this movie there
               along with showtime you want.
             </p>

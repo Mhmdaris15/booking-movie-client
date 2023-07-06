@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import RouteGuard from "./components/RouteGuard";
 import Login from "./pages/Login";
 import SingleMovie from "./pages/SingleMovie";
+import Profile from "./pages/Profile";
 import ApiDataProvider from "./components/ApiDataProvider";
 
 const PrivateRoute = ({ path, element: Component }) => {
@@ -61,6 +62,10 @@ function App() {
           <Route
             path="/login"
             element={<Login />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile />}
           />
           <Route
             path="*"

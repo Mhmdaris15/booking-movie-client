@@ -136,7 +136,7 @@ const Navbar = () => {
     },
     { title: "Add Movie", path: "/movies/add", isDrapdown: false },
     { title: "Customers", path: "/", isDrapdown: false },
-    { title: "Pricing", path: "/", isDrapdown: false },
+    { title: "Profile", path: "/profile", isDrapdown: false },
   ];
 
   useEffect(() => {
