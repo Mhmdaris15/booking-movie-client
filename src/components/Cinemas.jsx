@@ -78,8 +78,8 @@ const Cinemas = ({ movie_id }) => {
                     </span>
                     {showtimesData
                       .filter((showtime) => showtime.cinema_id == item.id)
-                      .map((showtime) => (
-                        <>
+                      .map((showtime, index) => (
+                        <div key={index}>
                           <button
                             onClick={() => toggleSeatModal(showtime.id)}
                             key={showtime.id}
@@ -93,7 +93,7 @@ const Cinemas = ({ movie_id }) => {
                               showtimeID={showtime.id}
                             />
                           )}
-                        </>
+                        </div>
                       ))}
                   </div>
                 </div>

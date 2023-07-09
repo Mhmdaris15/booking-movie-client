@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import SingleMovie from "./pages/SingleMovie";
 import Profile from "./pages/Profile";
 import ApiDataProvider from "./components/ApiDataProvider";
+import { NextUIProvider } from "@nextui-org/react";
+import Payment from "./pages/Payment";
 
 const PrivateRoute = ({ path, element: Component }) => {
   const navigate = useNavigate();
@@ -30,8 +32,6 @@ const PrivateRoute = ({ path, element: Component }) => {
 };
 
 function App() {
-  const [count, setCount] = useState(0);
-
   const hasJWT = () => {
     // Check if the user has JWT or not
     const token = localStorage.getItem("Token");
@@ -40,39 +40,45 @@ function App() {
 
   return (
     <ApiDataProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/movies/add"
-            element={<AddMovie />}
-          />
-          <Route
-            path="/movies/:id"
-            element={<SingleMovie />}
-          />
-          <Route
-            path="/register"
-            element={<Register />}
-          />
-          <Route
-            path="/login"
-            element={<Login />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile />}
-          />
-          <Route
-            path="*"
-            element="404 Not Found"
-          />
-        </Routes>
-      </BrowserRouter>
+      <NextUIProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={<Home />}
+            />
+            <Route
+              path="/movies/add"
+              element={<AddMovie />}
+            />
+            <Route
+              path="/movies/:id"
+              element={<SingleMovie />}
+            />
+            <Route
+              path="/register"
+              element={<Register />}
+            />
+            <Route
+              path="/login"
+              element={<Login />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/payment"
+              element={<Payment />}
+            />
+            <Route
+              path="*"
+              element="404 Not Found"
+            />
+          </Routes>
+        </BrowserRouter>
+      </NextUIProvider>
     </ApiDataProvider>
   );
 }

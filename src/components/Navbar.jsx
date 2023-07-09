@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Logo from "../assets/movie-48.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Avatar, Dropdown } from "@nextui-org/react";
 
 const dropdownNavs = [
   {
@@ -121,11 +122,13 @@ const dropdownNavs = [
 
 const Navbar = () => {
   const [state, setState] = useState(false);
+  const [auth, setAuth] = useState(false);
+  const [username, setUsername] = useState("");
   const [drapdownState, setDrapdownState] = useState({
     isActive: false,
     idx: null,
   });
-
+  const navigate = useNavigate();
   // Replace / paths with your paths
   const navigation = [
     {
@@ -135,7 +138,7 @@ const Navbar = () => {
       navs: dropdownNavs,
     },
     { title: "Add Movie", path: "/movies/add", isDrapdown: false },
-    { title: "Customers", path: "/", isDrapdown: false },
+    { title: "Payment", path: "/payment", isDrapdown: false },
     { title: "Profile", path: "/profile", isDrapdown: false },
   ];
 
@@ -145,6 +148,12 @@ const Navbar = () => {
       if (!target.closest(".nav-menu"))
         setDrapdownState({ isActive: false, idx: null });
     };
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAuth(true);
+      setUsername(localStorage.getItem("username"));
+    }
   }, []);
 
   return (
@@ -208,41 +217,42 @@ const Navbar = () => {
                 return (
                   <li key={idx}>
                     {item.isDrapdown ? (
-                      <button
-                        className="w-full flex items-center justify-between gap-1 text-gray-700 hover:text-indigo-600"
-                        onClick={() =>
-                          setDrapdownState({
-                            idx,
-                            isActive: !drapdownState.isActive,
-                          })
-                        }>
-                        {item.title}
-                        {drapdownState.idx == idx && drapdownState.isActive ? (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className="w-5 h-5">
-                            <path
-                              fillRule="evenodd"
-                              d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        ) : (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className="w-5 h-5">
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        )}
-                      </button>
+                      // <button
+                      //   className="w-full flex items-center justify-between gap-1 text-gray-700 hover:text-indigo-600"
+                      //   onClick={() =>
+                      //     setDrapdownState({
+                      //       idx,
+                      //       isActive: !drapdownState.isActive,
+                      //     })
+                      //   }>
+                      //   {item.title}
+                      //   {drapdownState.idx == idx && drapdownState.isActive ? (
+                      //     <svg
+                      //       xmlns="http://www.w3.org/2000/svg"
+                      //       viewBox="0 0 20 20"
+                      //       fill="currentColor"
+                      //       className="w-5 h-5">
+                      //       <path
+                      //         fillRule="evenodd"
+                      //         d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z"
+                      //         clipRule="evenodd"
+                      //       />
+                      //     </svg>
+                      //   ) : (
+                      //     <svg
+                      //       xmlns="http://www.w3.org/2000/svg"
+                      //       viewBox="0 0 20 20"
+                      //       fill="currentColor"
+                      //       className="w-5 h-5">
+                      //       <path
+                      //         fillRule="evenodd"
+                      //         d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      //         clipRule="evenodd"
+                      //       />
+                      //     </svg>
+                      //   )}
+                      // </button>
+                      ""
                     ) : (
                       <Link
                         to={item.path}
@@ -294,20 +304,58 @@ const Navbar = () => {
                 );
               })}
               <div className="flex-1 items-center justify-end gap-x-6 space-y-3 md:flex md:space-y-0">
-                <li>
-                  <Link
-                    to="/login"
-                    className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
-                    Log in
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/register"
-                    className="block py-3 px-4 font-medium text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none rounded-lg shadow md:inline">
-                    Sign Up
-                  </Link>
-                </li>
+                {auth ? (
+                  <Dropdown>
+                    <Dropdown.Button>
+                      <Avatar
+                        text={username.toUpperCase()}
+                        size="md"
+                      />
+                    </Dropdown.Button>
+                    <Dropdown.Menu aria-label="Static Actions">
+                      <Dropdown.Item key="edit">
+                        <Link
+                          to={"/profile"}
+                          className="h-full w-full">
+                          Edit Profile
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        key="logout"
+                        color="error">
+                        <div
+                          className="w-full h-full"
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("username");
+                            setAuth(false);
+                            setUsername("");
+                            navigate("/login");
+                            window.location.reload();
+                          }}>
+                          Logout
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  <>
+                    <li>
+                      <Link
+                        to="/login"
+                        className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
+                        Log in
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/register"
+                        className="block py-3 px-4 font-medium text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none rounded-lg shadow md:inline">
+                        Sign Up
+                      </Link>
+                    </li>
+                  </>
+                )}
               </div>
             </ul>
           </div>

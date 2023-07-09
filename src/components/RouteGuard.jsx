@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Navigate } from "react-router-dom";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 const RouteGuard = ({ path, element: Component }) => {
   const hasJWT = () => {

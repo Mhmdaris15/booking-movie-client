@@ -3,11 +3,14 @@ import ApiDataContext from "./ApiDataContext";
 import { MdEventSeat } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const SeatModal = ({ onToggle, showtimeID }) => {
   let { seatsData } = useContext(ApiDataContext);
 
   seatsData = seatsData.filter((seat) => seat.showtime_id == showtimeID);
+
+  const navigate = useNavigate();
 
   const [seats, setSeats] = useState([...seatsData]);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -107,7 +110,9 @@ const SeatModal = ({ onToggle, showtimeID }) => {
           </div>
           <div className="items-center gap-2 mt-3 sm:flex">
             <button
-              onClick={() => onToggle(showtimeID)}
+              onClick={() =>
+                navigate("/payment", { state: { selectedSeats, showtimeID } })
+              }
               className="w-full mt-2 p-2.5 flex-1 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2">
               Checkout
             </button>

@@ -4,6 +4,8 @@ import { Formik, Form, useFormik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const ValidationSchema = Yup.object({
   email: Yup.string()
@@ -34,14 +36,29 @@ const Login = () => {
       // Save the token, username to the local storage
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
-
-      console.log(response);
-      navigate("/");
+      showToastSuccess("Login Success");
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log("Error Axios Found : ", error);
+      showToastError("Login Failed");
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const showToastSuccess = (message) => {
+    toast.success(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
+
+  const showToastError = (message) => {
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
   };
 
   return (
@@ -60,6 +77,7 @@ const Login = () => {
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Log in
         </h1>
+        <ToastContainer />
         <div
           className="w-full rounded-lg md:mt-0
           sm:max-w-xl xl:p-0 ">
