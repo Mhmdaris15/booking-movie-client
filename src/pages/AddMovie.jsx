@@ -2,6 +2,8 @@ import axios, { formToJSON } from "axios";
 import React, { useRef, useState } from "react";
 import FileUploadImage from "../assets/file-upload-img.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
+
 
 const AddMovie = () => {
   const [imageFile, setImageFile] = useState("");
@@ -31,11 +33,19 @@ const AddMovie = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
           },
         }
       );
 
-      console.log(response);
+      toast.success(response.data.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+
     } catch (error) {
       console.log("Error Axios Found : ", error);
     } finally {
@@ -46,6 +56,7 @@ const AddMovie = () => {
   return (
     <section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <ToastContainer />
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
           Add a new movie
         </h2>

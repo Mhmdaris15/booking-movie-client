@@ -12,6 +12,8 @@ import Profile from "./pages/Profile";
 import ApiDataProvider from "./components/ApiDataProvider";
 import { NextUIProvider } from "@nextui-org/react";
 import Payment from "./pages/Payment";
+import Topup from "./pages/Topup";
+import AddShowtime from "./pages/AddShowtime";
 
 const PrivateRoute = ({ path, element: Component }) => {
   const navigate = useNavigate();
@@ -71,6 +73,14 @@ function App() {
             <Route
               path="/payment"
               element={<Payment />}
+            />
+             <Route
+              path="/topup"
+              element={<Topup />}
+            />
+            <Route
+              path="/showtimes/add"
+              element={<AddShowtime />}
             />
             <Route
               path="*"

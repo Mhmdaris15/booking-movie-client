@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../assets/movie-48.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Dropdown } from "@nextui-org/react";
+import ListPayments from "./ListPayments";
 
 const dropdownNavs = [
   {
@@ -138,8 +139,9 @@ const Navbar = () => {
       navs: dropdownNavs,
     },
     { title: "Add Movie", path: "/movies/add", isDrapdown: false },
+    { title: "Add Showtime", path: "/showtimes/add", isDrapdown: false },
     { title: "Payment", path: "/payment", isDrapdown: false },
-    { title: "Profile", path: "/profile", isDrapdown: false },
+    { title: "Topup", path: "/topup", isDrapdown: false },
   ];
 
   useEffect(() => {
@@ -368,6 +370,7 @@ const Navbar = () => {
       ) : (
         ""
       )}
+    <ListPayments />
     </>
   );
 };

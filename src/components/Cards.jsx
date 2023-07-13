@@ -16,6 +16,13 @@ const Cards = () => {
     };
   });
 
+  const shortenDescription = (description) => {
+    if (description.length > 400) {
+      return description.substring(0, 100) + "...";
+    }
+    return description;
+  };
+
   return (
     <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
       <div className="text-center">
@@ -24,17 +31,17 @@ const Cards = () => {
           Movies that are loved by the people. Updated every hour.
         </p>
       </div>
-      <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="my-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((items, key) => (
           <article
-            className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm"
+            className="w-full mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm"
             key={items.movie_data.id}>
             <Link to={`/movies/${items.movie_data.id}`}>
               <img
                 src={items.movie_image}
                 loading="lazy"
                 alt={items.movie_data.title}
-                className="w-full h-48 rounded-t-md"
+                className="w-full h-48 rounded-t-md object-contain"
               />
               <div className="flex items-center mt-2 pt-3 ml-4 mr-2">
                 <div className="flex-none w-10 h-10 rounded-full">
@@ -56,7 +63,7 @@ const Cards = () => {
                   {items.movie_data.title}
                 </h3>
                 <p className="text-gray-400 text-sm mt-1">
-                  {items.movie_data.description}
+                  {shortenDescription(items.movie_data.description)}
                 </p>
               </div>
             </Link>

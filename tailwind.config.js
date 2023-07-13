@@ -24,6 +24,7 @@ export default {
       },
     },
     fontFamily: {
+      roboto: ['"Roboto Mono"', 'monospace'], 
       body: [
         "Inter",
         "ui-sans-serif",

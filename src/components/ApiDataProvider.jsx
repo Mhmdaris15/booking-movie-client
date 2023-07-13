@@ -9,6 +9,8 @@ const ApiDataProvider = ({ children }) => {
   const [cinemasData, setCinemasData] = useState([]);
   const [showtimesData, setShowtimesData] = useState([]);
   const [seatsData, setSeatsData] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [ticketsData, setTicketsData] = useState(null);
 
   const token = localStorage.getItem("token");
 
@@ -49,15 +51,46 @@ const ApiDataProvider = ({ children }) => {
       }
     };
 
+    const fetchUserData = async () => {
+      const username = localStorage.getItem("username");
+
+      if (!username) {
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${baseURL}/users/${username}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    const fetchTicketsData = async () => {
+      try {
+          const response = await axios.get(`${baseURL}/tickets/user/${localStorage.getItem("username")}`, {
+              headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+          });
+          setTicketsData(response.data);
+      } catch (error) {
+          console.error("Error fetching tickets data:", error);
+      }
+  };
+    
+
     fetchData();
     fetchCinemasData();
     fetchShowtimesData();
     fetchSeatsData();
+    fetchUserData();
+    fetchTicketsData();
   }, []);
 
   return (
     <ApiDataContext.Provider
-      value={{ data, cinemasData, showtimesData, seatsData }}>
+      value={{ data, cinemasData, showtimesData, seatsData, userData, ticketsData }}>
       {children}
     </ApiDataContext.Provider>
   );
