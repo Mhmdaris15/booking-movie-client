@@ -2,9 +2,12 @@ import React from "react";
 import Logo from "../assets/movie-48.png";
 import { Formik, Form, useFormik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../helpers/Config";
+import { ToastContainer, toast } from "react-toastify";
+
+
 
 const ValidationSchema = Yup.object({
   username: Yup.string()
@@ -30,6 +33,9 @@ const ValidationSchema = Yup.object({
 });
 
 const Register = () => {
+  const navigate = useNavigate();
+
+
   const handleSubmit = async (values, { setSubmitting }) => {
     const tmp = values;
     values = {
@@ -46,16 +52,35 @@ const Register = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
+
+      showToastSuccess("Login Success");
+      setTimeout(() => {
+        navigate("/");
+        // window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log("Error Axios Found : ", error);
+      showToastError("Login Failed");
     } finally {
       setSubmitting(false);
     }
   };
 
+  const showToastSuccess = (message) => {
+    toast.success(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
+
+  const showToastError = (message) => {
+    toast.error(message, {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
+      <ToastContainer />
       <div className="flex flex-col items-center justify-center px-6  py-8 mx-auto md:h-screen lg:py-0">
         <Link
           to={"/"}

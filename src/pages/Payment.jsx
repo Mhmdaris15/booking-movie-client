@@ -9,7 +9,7 @@ import {IoIosPricetags} from "react-icons/io"
 import {GiTheater} from "react-icons/gi"
 import axios from "axios";
 
-const baseURL = "http://localhost:3000";
+const baseURL = "http://103.166.164.97:2003";
 
 const Payment = () => {
   const { state } = useLocation();
@@ -20,10 +20,10 @@ const Payment = () => {
   const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   const { seatsData, showtimesData, data, userData, cinemasData } = useContext(ApiDataContext);
-  const seats = seatsData.filter((seat) => selectedSeats.includes(seat.id));
-  const showtime = showtimesData.find((showtime) => showtime.id == showtimeID);
-  const movie = data.find((movie) => movie.movie_data.id == showtime?.movie_id);
-  const cinema = cinemasData.find((cinema) => cinema.id == showtime?.cinema_id);
+  const seats = seatsData?.filter((seat) => selectedSeats.includes(seat.id));
+  const showtime = showtimesData?.find((showtime) => showtime.id == showtimeID);
+  const movie = data?.find((movie) => movie.movie_data.id == showtime?.movie_id);
+  const cinema = cinemasData?.find((cinema) => cinema.id == showtime?.cinema_id);
 
   const currentDateTime = new Date().toLocaleString();
 

@@ -4,6 +4,7 @@ import FileUploadImage from "../assets/file-upload-img.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 
+const baseURL = "http://103.166.164.97:2003"
 
 const AddMovie = () => {
   const [imageFile, setImageFile] = useState("");
@@ -28,7 +29,7 @@ const AddMovie = () => {
       formData.append("image_file", fileRef.current);
       console.log(formToJSON(formData));
       const response = await axios.post(
-        "http://localhost:3000/movies",
+        `${baseURL}/movies`,
         formToJSON(formData),
         {
           headers: {

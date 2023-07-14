@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Cinemas from "../components/Cinemas";
 
+const baseURL = "http://103.166.164.97:2003"
+
 const SingleMovie = () => {
   const [data, setData] = useState(null);
   const imgRef = useRef(null);
@@ -12,7 +14,7 @@ const SingleMovie = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/movies/${movie_id}`);
+      const response = await fetch(`${baseURL}/movies/${movie_id}`);
       const data = await response.json();
       imgRef.current = `data:image/jpeg;base64,${data.movie_image}`;
       setData(data.movie_data);

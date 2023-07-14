@@ -7,7 +7,7 @@ const Cinemas = ({ movie_id }) => {
 
   let { showtimesData, cinemasData } = useContext(ApiDataContext);
 
-  showtimesData = showtimesData.filter(
+  showtimesData = showtimesData?.filter(
     (showtime) => showtime.movie_id === movie_id
   );
 
@@ -48,7 +48,7 @@ const Cinemas = ({ movie_id }) => {
         </div>
         <div className="relative mt-12">
           <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {cinemasData.map((item, idx) => (
+            {cinemasData?.map((item, idx) => (
               <li
                 key={idx}
                 className="bg-white space-y-3 p-4 border rounded-lg hover:bg-slate-100 transition-all">
@@ -76,9 +76,7 @@ const Cinemas = ({ movie_id }) => {
                     <span className="font-bold text-blue-500 mb-5">
                       Showtimes :
                     </span>
-                    {showtimesData
-                      .filter((showtime) => showtime.cinema_id == item.id)
-                      .map((showtime, index) => (
+                    {showtimesData?.filter((showtime) => showtime.cinema_id == item.id)?.map((showtime, index) => (
                         <div key={index}>
                           <button
                             onClick={() => toggleSeatModal(showtime.id)}

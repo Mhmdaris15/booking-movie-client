@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 
+const baseURL = "http://103.166.164.97:2003"
+
 const AddShowtime = () => {
 
   const { data, cinemasData } = useContext(ApiDataContext)
@@ -32,7 +34,7 @@ const AddShowtime = () => {
       EndTime: selectedEndTime
     } 
 
-    axios.post('http://localhost:3000/showtimes', formData, 
+    axios.post(`${baseURL}/showtimes`, formData, 
     {
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +73,7 @@ const AddShowtime = () => {
             <label htmlFor="movie" className='font-bold text-2xl text-center'>Movie</label>
             <select name="movie" id="movie" value={selectedMovie} onChange={event => setSelectedMovie(event.target.value)} className='text-gray-950 font-bold rounded-lg' >
               <option value="0">Select a movie</option>
-              {movies.map(movie => {
+              {movies?.map(movie => {
                 return <option className='text-gray-950 font-roboto' value={movie.movie_data.id}>{movie.movie_data.title}</option>
               })}
             </select>
@@ -80,7 +82,7 @@ const AddShowtime = () => {
             <label htmlFor="movie" className='font-bold text-2xl text-center'>Cinema</label>
             <select name="movie" id="movie" value={selectedCinema} onChange={event => setSelectedCinema(event.target.value)} className='text-gray-950 font-bold rounded-lg' >
               <option value="0">Select a Cinema</option>
-              {cinemas.map(cinema => {
+              {cinemas?.map(cinema => {
                 return <option className='text-gray-950 font-roboto' value={cinema.id}>{cinema.name}</option>
               })}
             </select>
