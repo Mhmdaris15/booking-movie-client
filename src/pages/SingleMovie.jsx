@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Cinemas from "../components/Cinemas";
 
-const baseURL = "http://103.166.164.97:2003"
+const baseURL = "https://booking-movie-app-production.up.railway.app"
 
 const SingleMovie = () => {
   const [data, setData] = useState(null);

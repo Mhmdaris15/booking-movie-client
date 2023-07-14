@@ -9,7 +9,7 @@ import {IoIosPricetags} from "react-icons/io"
 import {GiTheater} from "react-icons/gi"
 import axios from "axios";
 
-const baseURL = "http://103.166.164.97:2003";
+const baseURL = "https://booking-movie-app-production.up.railway.app";
 
 const Payment = () => {
   const { state } = useLocation();
