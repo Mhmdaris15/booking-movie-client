@@ -9,6 +9,8 @@ import {IoIosPricetags} from "react-icons/io"
 import {GiTheater} from "react-icons/gi"
 import axios from "axios";
 
+const baseURL = "http://localhost:3000";
+
 const Payment = () => {
   const { state } = useLocation();
   const { selectedSeats, showtimeID } = state || {
@@ -36,7 +38,25 @@ const Payment = () => {
     return formatter.format(number);
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+
+    const postTicket = axios.post(`${baseURL}/tickets`, {
+      
+      showtime_id: showtimeID,
+      seat_id: selectedSeats,
+      user_id: userData.id,
+      total_price: selectedSeats.length * movie?.movie_data.price,
+      status: "paid"
+
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization' : `Bearer ${token}`
+      }
+    })
+  
+  
   }
   return (
     <div className="bg-gray-400 w-screen h-screen">
@@ -60,7 +80,7 @@ const Payment = () => {
             <div className="flex gap-6 items-center"><IoIosPricetags className="text-5xl" /> <p className="text-3xl font-roboto">
           <p >Your Current Balance:</p>
             <p className={`text-3xl font-roboto ${(movie?.movie_data?.ticket_price * selectedSeats.length) <= (userData?.balance) ? "text-green-400" : "text-red-500"}`}>{toRupiah(userData?.balance)}</p><p className={`text-red-500 italic text-sm ${(movie?.movie_data?.ticket_price * selectedSeats.length) <= (userData?.balance) ? "hidden" : "block"}`}>Your Balance is not enough to make this payment. Please top up your balance</p></p></div>
-            
+            <p className="text-yellow-300 italic text-sm">Please Hard Refresh the browser, if your balance haven't updated yet!</p>
           <button type="submit" className="bg-red-600 px-5 py-3 rounded-lg w-fit mx-auto font-roboto uppercase font-bold text-lg hover:bg-red-900 transition-all hover:-translate-y-2 hover:shadow-sm">Checkout now!</button>
         </div>
         </>

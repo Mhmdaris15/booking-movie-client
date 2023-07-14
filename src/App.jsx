@@ -40,6 +40,12 @@ function App() {
     return !!token; // Returns true if token exists, false otherwise
   };
 
+  if (new Date().getTime() > localStorage.getItem("TokenExpiredTime")) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("TokenExpiredTime");
+    localStorage.removeItem("username");
+  }
+
   return (
     <ApiDataProvider>
       <NextUIProvider>

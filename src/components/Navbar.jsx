@@ -310,7 +310,7 @@ const Navbar = () => {
                   <Dropdown>
                     <Dropdown.Button>
                       <Avatar
-                        text={username.toUpperCase()}
+                        text={username?.toUpperCase()}
                         size="md"
                       />
                     </Dropdown.Button>

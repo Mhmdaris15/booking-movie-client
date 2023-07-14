@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ApiDataContext from '../components/ApiDataContext';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
 
 const baseURL = "http://localhost:3000";
 
 const Topup = () => {
 
-    const { userData } = useContext(ApiDataContext)
-    const [ user, setUser ] = useState(null)
-    
-    console.log(userData)    
+    const { userData } = useContext(ApiDataContext);
+    const [user, setUser] = useState();
 
     const packet = [
         {
@@ -54,29 +55,63 @@ const Topup = () => {
         },
     ]
     
+    const navigate = useNavigate()
+
     const [selected, setSelected] = useState(null)
     const [confirm, setConfirm] = useState(false)
 
+    const showSuccess = () => {
+        toast.success('Top up success!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+        })
+        setTimeout(() => {
+            navigate('/')
+          }
+        , 3000);
+    }
+
+    const showError = () => {
+        toast.error('Top up failed!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+        })
+    }
+
     const handleSubmit = () => {
-        console.log(selected)
         setConfirm(false)
+        // console.log(
+        //     "User Data", userData
+        // )
         setUser({
-            ...user,
-            balance: user.balance + selected.amount
+            // id: userData.id,
+            // username: userData.username,
+            // email: userData.email,
+            // password: userData.password,
+            // name: userData.name,
+            // age: userData.age,
+            // balanace: userData.balance + selected.amount,
+            ...userData,
+            balance: userData.balance + selected.amount,
+        })
+        console.log("User Data", {
+            ...userData, balance: userData.balance + selected.amount
         })
         axios.put(`${baseURL}/users/${userData.username}`, {
-            ...user,
+            ...userData, balance: userData.balance + selected.amount
     }, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userData.token}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })
     .then((res) => {
         console.log(res)
+        showSuccess()
     })
     .catch((err) => {
         console.log(err)
+        showError()
     })
 
     }
@@ -85,6 +120,7 @@ const Topup = () => {
   return (
     <div className='h-full'>
         <div className='bg-blue-950 p-10 h-[40em]'>
+        <ToastContainer />
         <h1 className='font-roboto text-center text-gray-50'>Top Up</h1>
             <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
                 {packet.map((item) => (

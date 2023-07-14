@@ -41,7 +41,7 @@ const ListPayments = () => {
   
 
   return (
-    <>
+    <div className='absolute'>
       <AiOutlineMenuUnfold
         className="text-gray-950 w-16 m-5 h-16 p-2 text-4xl bg-blue-300 rounded-lg hover:bg-blue-700 hover:text-gray-50 transition-all cursor-pointer"
         onClick={() => setAppear(true)}
@@ -72,7 +72,7 @@ const ListPayments = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

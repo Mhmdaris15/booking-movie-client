@@ -19,6 +19,8 @@ const ValidationSchema = Yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
+  const tokenExpirationTime = 2 * 60 * 60 * 1000; // 2 hours
+
   const handleSubmit = async (values, { setSubmitting }) => {
     const tmp = values;
     values = {
@@ -36,16 +38,28 @@ const Login = () => {
       // Save the token, username to the local storage
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
+      localStorage.setItem("TokenExpiredTime", new Date().getTime() + tokenExpirationTime);
       showToastSuccess("Login Success");
+
       setTimeout(() => {
         navigate("/");
-        window.location.reload();
+        // window.location.reload();
       }, 2000);
     } catch (error) {
       console.log("Error Axios Found : ", error);
       showToastError("Login Failed");
     } finally {
       setSubmitting(false);
+
+      // Expired Token in 10 seconds
+      // setTimeout(() => {
+      //   localStorage.removeItem("token");
+      //   localStorage.removeItem("username");
+      //   window.location.reload();
+      // }, tokenExpirationTime);
+
+      // console.log("Token Expired in 10 seconds")
+
     }
   };
 
