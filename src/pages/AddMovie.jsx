@@ -4,7 +4,7 @@ import FileUploadImage from "../assets/file-upload-img.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
 
-const baseURL = "http://103.166.164.97:2003"
+const baseURL = "https://booking-movie-app-production.up.railway.app"
 
 const AddMovie = () => {
   const [imageFile, setImageFile] = useState("");
