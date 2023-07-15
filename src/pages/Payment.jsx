@@ -11,7 +11,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const baseURL = "http://localhost:3000";
+const baseURL = "https://booking-movie-app-production.up.railway.app";
 
 const Payment = () => {
   const { state } = useLocation();

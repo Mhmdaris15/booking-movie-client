@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
-const baseURL = "http://localhost:3000"
+const baseURL = "https://booking-movie-app-production.up.railway.app"
 
 const AddMovie = () => {
   const [imageFile, setImageFile] = useState("");

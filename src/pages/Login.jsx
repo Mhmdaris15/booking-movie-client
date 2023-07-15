@@ -7,7 +7,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
-const baseURL = "http://localhost:3000"
+const baseURL = "https://booking-movie-app-production.up.railway.app"
 
 const ValidationSchema = Yup.object({
   email: Yup.string()

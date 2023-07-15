@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ApiDataContext from "./ApiDataContext";
 import axios from "axios";
 
-const baseURL = "http://localhost:3000";
+const baseURL = "https://booking-movie-app-production.up.railway.app";
 
 const ApiDataProvider = ({ children }) => {
   const [data, setData] = useState([]);
