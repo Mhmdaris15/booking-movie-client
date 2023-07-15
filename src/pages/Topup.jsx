@@ -5,7 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 
-const baseURL = "https://booking-movie-app-production.up.railway.app";
+
+const baseURL = "http://localhost:3000";
 
 const Topup = () => {
 
@@ -57,6 +58,15 @@ const Topup = () => {
     
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (localStorage.getItem('token') === null) {
+            showWarning()
+            setTimeout(() => {
+                navigate('/login')
+            }, 3000);
+        }
+    }, [])
+
     const [selected, setSelected] = useState(null)
     const [confirm, setConfirm] = useState(false)
 
@@ -77,6 +87,14 @@ const Topup = () => {
             autoClose: 3000,
         })
     }
+
+    const showWarning = () => {
+        toast.warn('Please Login or Register first!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+        })
+    }
+
 
     const handleSubmit = () => {
         setConfirm(false)

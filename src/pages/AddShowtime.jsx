@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 
-const baseURL = "https://booking-movie-app-production.up.railway.app"
+const baseURL = "http://localhost:3000"
 
 const AddShowtime = () => {
 
@@ -25,6 +25,15 @@ const AddShowtime = () => {
     setCinemas(cinemasData)
 
   }, [data, cinemasData])
+
+  useEffect(() => {
+    if (localStorage.getItem('token') === null) {
+        showWarning()
+        setTimeout(() => {
+            navigate('/login')
+        }, 3000);
+    }
+  }, [])
 
   const handleSubmit = () => {
     const formData = {
@@ -63,6 +72,15 @@ const AddShowtime = () => {
       draggable: true
     })
   }
+
+
+  const showWarning = () => {
+    toast.warn('Please Login or Register first!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+    })
+}
+
 
   return (
     <div className='h-screen w-screen'>

@@ -1,14 +1,27 @@
 import axios, { formToJSON } from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FileUploadImage from "../assets/file-upload-img.jpg";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const baseURL = "https://booking-movie-app-production.up.railway.app"
+
+const baseURL = "http://localhost:3000"
 
 const AddMovie = () => {
   const [imageFile, setImageFile] = useState("");
   const fileRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token') === null) {
+        showWarning()
+        setTimeout(() => {
+            navigate('/login')
+        }, 3000);
+    }
+  }, [])
 
   const handleFileImage = (event, setFieldValue) => {
     setImageFile(URL.createObjectURL(event.target.files[0]));
@@ -53,6 +66,13 @@ const AddMovie = () => {
       setSubmitting(false);
     }
   };
+
+  const showWarning = () => {
+    toast.warn('Please Login or Register first!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+    })
+  }
 
   return (
     <section className="bg-white dark:bg-gray-900">

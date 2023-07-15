@@ -7,7 +7,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
-const baseURL = "https://booking-movie-app-production.up.railway.app"
+const baseURL = "http://localhost:3000"
 
 const ValidationSchema = Yup.object({
   email: Yup.string()
@@ -163,11 +163,11 @@ const Login = () => {
                   Log in to my account
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{" "}
+                  Don't have an account yet?{" "}
                   <Link
-                    to={"/login"}
+                    to={"/register"}
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                    Login here
+                    Sign up here
                   </Link>
                 </p>
               </Form>
